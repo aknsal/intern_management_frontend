@@ -1,0 +1,29 @@
+.job-profile-paper{
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
+}
+
+.internship-page-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.job-profile-paper-align{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job-description-paper{
+    padding:1.5rem;
+}
+
+.internship_page-sub{
+    max-width: 1000px;
+}

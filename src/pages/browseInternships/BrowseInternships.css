@@ -1,0 +1,14 @@
+.browse-internship-conatiner{
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.show-internships{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
