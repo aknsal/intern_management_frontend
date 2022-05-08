@@ -28,16 +28,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(companyName, profile, appliedOn, numberOfApplicants, applicationStatus) {
-  return { companyName, profile, appliedOn, numberOfApplicants, applicationStatus };
+function createData(facultyName, profile, appliedOn, numberOfApplicants, applicationStatus) {
+  return { facultyName, profile, appliedOn, numberOfApplicants, applicationStatus };
 }
 
 const rows = [
-  createData('Microsoft', 'Software Engineer', 6.0, 24, 4.0),
-  createData('Google', 'Software Engineer', 9.0, 37, 4.3),
-  createData('Sprinklr', "ML Engineer", 16.0, 24, 6.0),
-  createData('Goldman Sachs', "Technical Analyst", 3.7, 67, 4.3),
-  createData('Accenture', "Risk Analyst", 16.0, 49, 3.9),
+  createData('O.P Vyas', 'Software Engineer', "24/07/22", 24, 4.0),
+  createData('Dr. Anjali Gautam', 'Software Engineer', "06/05/22", 37, 4.3),
+  createData('Dr. Bibhas Ghoshal', "ML Engineer", "15/03/22", 24, 6.0),
+  createData('Dr. Muhammed Javed', "Technical Analyst", "24/04/22", 67, 4.3),
+  createData('Dr. rahul Kala', "Risk Analyst", "13/07/22", 49, 3.9),
 ];
 
 export default function ListInternshipTable() {
@@ -46,7 +46,7 @@ export default function ListInternshipTable() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Company</StyledTableCell>
+            <StyledTableCell>Faculty</StyledTableCell>
             <StyledTableCell align="center">Profile</StyledTableCell>
             <StyledTableCell align="center">Applied on</StyledTableCell>
             <StyledTableCell align="center">Number of Applicants</StyledTableCell>
@@ -55,9 +55,9 @@ export default function ListInternshipTable() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.facultyName}>
               <StyledTableCell component="th" scope="row">
-                {row.companyName}
+                {row.facultyName}
               </StyledTableCell>
               <StyledTableCell align="center">{row.profile}</StyledTableCell>
               <StyledTableCell align="center">{row.appliedOn}</StyledTableCell>

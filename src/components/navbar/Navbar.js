@@ -5,18 +5,29 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-// import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Switch from '@mui/material/Switch';
+import { Link } from 'react-router-dom';
+import { userDetailsContext } from "../../context/userDetailsProvider";
 
-const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Navbar = ({setIsDarkTheme}) => {
+const Navbar = ({ setIsDarkTheme }) => {
+
+  const [userDetails, setUserDetails] = React.useContext(userDetailsContext);
+  const [loading, setLoading] = React.useState(false);
+
+
+
+  React.useEffect(() => {
+    setUserDetails({ isStudent: true, studentName: "Mehta" });
+    console.log("userDetails", userDetails);
+  }, []);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -43,13 +54,16 @@ const Navbar = ({setIsDarkTheme}) => {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             noWrap
-            component="div"
+            component={Link}
+            to="/"
+            style={{ textDecoration: "none", color: "#ffffff" }}
+
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
             LOGO
@@ -64,9 +78,8 @@ const Navbar = ({setIsDarkTheme}) => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              {/* <MenuIcon /> */}
-              <div>Opt</div>
-              
+              <MenuIcon />
+
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -86,41 +99,53 @@ const Navbar = ({setIsDarkTheme}) => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+
+              <MenuItem component={Link} to={userDetails && userDetails.isStudent ? "/dashboard/student" : "/dashboard/faculty"} onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">Dashboard</Typography>
+              </MenuItem>
               <Switch
-                    checked={checked}
-                    onChange={handleThemeChange}
-                    inputProps={{ 'aria-label': 'controlled' }}
-                    />
+                checked={checked}
+                onChange={handleThemeChange}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
             </Menu>
           </Box>
           <Typography
             variant="h6"
             noWrap
-            component="div"
+            component={Link}
+            to="/"
+            style={{ textDecoration: "none", color: "#ffffff" }}
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+          <Box sx={{ flexGrow: 1, justifyContent: "flex-end", alignItems: "center", display: { xs: 'none', md: 'flex' }, paddingRight: 3 }}>
+
             <Switch
-                    checked={checked}
-                    onChange={handleThemeChange}
-                    inputProps={{ 'aria-label': 'controlled' }}
-                    />
+              checked={checked}
+              onChange={handleThemeChange}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+
+
+            <Button
+              component={Link} to={userDetails && userDetails.isStudent ? "/dashboard/student" : "/dashboard/faculty"}
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Dashboard
+            </Button>
+
+            <Button
+              component={Link} to="/profile"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Profile
+            </Button>
+
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
