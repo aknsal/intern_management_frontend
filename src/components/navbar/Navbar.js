@@ -25,7 +25,7 @@ const Navbar = ({ setIsDarkTheme }) => {
 
 
   React.useEffect(() => {
-    setUserDetails({ isStudent: true, studentName: "Mehta" });
+    setUserDetails({ isStudent: false, studentName: "Mehta" });
     console.log("userDetails", userDetails);
   }, []);
 
@@ -139,7 +139,7 @@ const Navbar = ({ setIsDarkTheme }) => {
             </Button>
 
             <Button
-              component={Link} to="/profile"
+              component={Link} to={userDetails && userDetails.isStudent ? "/profile/student" : "/profile/faculty"}
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'white', display: 'block' }}
             >

@@ -1,12 +1,18 @@
 .profile-container {
-    margin: 4rem;
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
 }
 
 .student-profile-paper {
-    max-width: 1000px;
+    margin-top: 2rem;
+    max-width: 600px;
+    padding: 3rem;
     flex-grow: 100;
 }
+
+/* .profile-input {
+    margin: 1rem 0 1rem 0;
+} */

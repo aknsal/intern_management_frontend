@@ -14,6 +14,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FacultyDashboard from './pages/dashboard/Dashboard.faculty';
 import UserDetailsProvider from './context/userDetailsProvider';
 import StudentProfile from './pages/Profile/Profile.student';
+import FacultyProfile from './pages/Profile/Profile.faculty';
+import Application from './pages/application/Application';
+import ReviewApplication from "./pages/application/ReviewApplication";
 
 
 function App() {
@@ -33,6 +36,9 @@ function App() {
               <Route exact path="/browse-internship" element={<BrowseInternships />} />
               <Route exact path="/dashboard/faculty" element={< FacultyDashboard />} />
               <Route exact path="/profile/student" element={< StudentProfile />} />
+              <Route exact path="/profile/faculty" element={< FacultyProfile />} />
+              <Route exact path="/application" element={< Application />} />
+              <Route exact path="/review/application" element={< ReviewApplication />} />
 
             </Routes>
           </Layout>

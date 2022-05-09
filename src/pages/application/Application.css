@@ -1,0 +1,46 @@
+.application-cointainer {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.job-profile-paper {
+    max-width: 700px;
+}
+
+.job-profile-paper-align {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.application-paper-input-1 {
+    max-width: 700px;
+    padding: 2rem;
+    margin-top: 3rem;
+}
+
+.profile-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.student-profile-paper {
+    margin-top: 2rem;
+    max-width: 600px;
+    padding: 3rem;
+    flex-grow: 100;
+}
+
+.application-input-paper {
+    margin-top: 2rem;
+    max-width: 800px;
+    padding: 3rem;
+    flex-grow: 100;
+}
