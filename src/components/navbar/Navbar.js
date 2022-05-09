@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Switch from '@mui/material/Switch';
 import { Link } from 'react-router-dom';
 import { userDetailsContext } from "../../context/userDetailsProvider";
+import axios from 'axios';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -22,6 +23,9 @@ const Navbar = ({ setIsDarkTheme }) => {
   const [userDetails, setUserDetails] = React.useContext(userDetailsContext);
   const [loading, setLoading] = React.useState(false);
 
+  React.useEffect(() => {
+    fetchAuthUser();
+  }, [])
 
 
   React.useEffect(() => {
@@ -51,6 +55,49 @@ const Navbar = ({ setIsDarkTheme }) => {
   const handleThemeChange = (event) => {
     setChecked(event.target.checked);
     setIsDarkTheme(event.target.checked);
+  }
+
+
+  const fetchAuthUser = async () => {
+    const response = await axios.get("http://localhost:3001/profile", { withCredentials: true }).catch((err) => {
+      setUserDetails(null);
+    });
+
+    if (response && response.data) {
+      setUserDetails(response.data.user);
+    }
+  }
+
+
+
+  const redirectToGoogleSSOStudent = async () => {
+    let timer = null;
+    const googleLoginURL = "http://localhost:3001/login/student";
+    const newWindow = window.open(googleLoginURL, "_blank", "width=500,height=600");
+
+    if (newWindow) {
+      timer = setInterval(() => {
+        if (newWindow.closed) {
+          fetchAuthUser();
+          if (timer) clearInterval(timer);
+        }
+      }, 500)
+    }
+  }
+
+  const redirectToGoogleSSOFaculty = async () => {
+    let timer = null;
+    const googleLoginURL = "http://localhost:3001/login/faculty";
+    const newWindow = window.open(googleLoginURL, "_blank", "width=500,height=600");
+
+    if (newWindow) {
+      timer = setInterval(() => {
+        if (newWindow.closed) {
+          fetchAuthUser();
+          if (timer) clearInterval(timer);
+        }
+      }, 500)
+    }
   }
 
   return (
@@ -149,11 +196,20 @@ const Navbar = ({ setIsDarkTheme }) => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {
+              userDetails && userDetails.email ?
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  </IconButton>
+                </Tooltip>
+                : <div>
+
+                  <Button color='primary' variant='contained' onClick={redirectToGoogleSSOStudent}>Login as Student</Button>
+                  <Button color='primary' variant='contained' onClick={redirectToGoogleSSOFaculty}>Login as Faculty</Button>
+                </div>
+
+            }
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
