@@ -1,7 +1,22 @@
 import React from 'react'
+import NavbarComp from '../../components/navbar/Navbar';
+import Footer from '../../components/footer/footer';
+import { Carouselcomp, Cards, Cards_cate} from './home';
 
 export default function Homepage() {
   return (
-    <div>Homepage</div>
+    <>
+    {/* <NavbarComp/> */}
+
+    <br/><br/><br/>
+    <Carouselcomp/>
+    <br/> 
+    <br/>
+    <Cards/>
+    <br/>
+    <Cards_cate/>
+    <br/><br/><br/><br/><br/><br/>
+    <Footer/>
+    </>
   )
 }
