@@ -17,7 +17,7 @@ import StudentProfile from './pages/Profile/Profile.student';
 import FacultyProfile from './pages/Profile/Profile.faculty';
 import Application from './pages/application/Application';
 import ReviewApplication from "./pages/application/ReviewApplication";
-
+import PostApplication from './pages/admin/postApplication';
 
 function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -39,6 +39,7 @@ function App() {
               <Route exact path="/profile/faculty" element={< FacultyProfile />} />
               <Route exact path="/application" element={< Application />} />
               <Route exact path="/review/application" element={< ReviewApplication />} />
+              <Route exact path="/admin" element = {< PostApplication />} />
 
             </Routes>
           </Layout>

@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { userDetailsContext } from "../../context/userDetailsProvider";
 import axios from 'axios';
 
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = ({ setIsDarkTheme }) => {
@@ -83,6 +84,17 @@ const Navbar = ({ setIsDarkTheme }) => {
         }
       }, 500)
     }
+  }
+
+  const handleProfile = async (setting) => {
+    handleCloseUserMenu()
+
+    if(setting === "Logout"){
+      await axios.get("http://localhost:3001/logout", { withCredentials: true })
+      setUserDetails(null)
+      window.location = "/"
+    }
+
   }
 
   const redirectToGoogleSSOFaculty = async () => {
@@ -176,22 +188,21 @@ const Navbar = ({ setIsDarkTheme }) => {
               inputProps={{ 'aria-label': 'controlled' }}
             />
 
-
-            <Button
-              component={Link} to={userDetails && userDetails.isStudent ? "/dashboard/student" : "/dashboard/faculty"}
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
-              Dashboard
-            </Button>
-
-            <Button
-              component={Link} to={userDetails && userDetails.isStudent ? "/profile/student" : "/profile/faculty"}
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
-              Profile
-            </Button>
+            {userDetails && 
+            <><Button
+                component={Link} to={userDetails && userDetails.isStudent ? "/dashboard/student" : "/dashboard/faculty"}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Dashboard
+              </Button><Button
+                component={Link} to={userDetails && userDetails.isStudent ? "/profile/student" : "/profile/faculty"}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                  Profile
+                </Button></>
+            }
 
           </Box>
 
@@ -227,7 +238,7 @@ const Navbar = ({ setIsDarkTheme }) => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleProfile(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
