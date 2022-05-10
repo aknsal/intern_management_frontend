@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import PreviewIcon from '@mui/icons-material/Preview';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import axios from 'axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -44,6 +45,17 @@ const rows = [
 ];
 
 export default function ListApplicationTable() {
+
+    React.useEffect(() => {
+        fetchDetails()
+    }, []);
+
+    const fetchDetails = async() => {
+        const data = await axios.get('http://localhost:3001/intern/facultyInterships' , {withCredentials:true})
+        console.log(data)
+    }
+
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
