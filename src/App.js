@@ -37,8 +37,8 @@ function App() {
               <Route exact path="/dashboard/faculty" element={< FacultyDashboard />} />
               <Route exact path="/profile/student" element={< StudentProfile />} />
               <Route exact path="/profile/faculty" element={< FacultyProfile />} />
-              <Route exact path="/application" element={< Application />} />
-              <Route exact path="/review/application" element={< ReviewApplication />} />
+              <Route exact path="/application/:aid" element={< Application />} />
+              <Route exact path="/review/:aid" element={< ReviewApplication />} />
               <Route exact path="/admin" element = {< PostApplication />} />
 
             </Routes>

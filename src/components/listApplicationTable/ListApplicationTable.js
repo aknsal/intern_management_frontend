@@ -39,9 +39,9 @@ function createData(studentName, jobRole, appliedOn, applicationStatus, applicat
 const rows = [
     createData('O.P Vyas', 'Software Engineer', "24/07/22", "Pending", 78432),
     createData('Dr. Anjali Gautam', 'Software Engineer', "06/05/22", "Pending", 389214),
-    createData('Dr. Bibhas Ghoshal', "ML Engineer", "15/03/22", "Pending", 32819),
-    createData('Dr. Muhammed Javed', "Technical Analyst", "24/04/22", "Pending", 32983),
-    createData('Dr. rahul Kala', "Risk Analyst", "13/07/22", "Pending", 329810),
+    // createData('Dr. Bibhas Ghoshal', "ML Engineer", "15/03/22", "Pending", 32819),
+    // createData('Dr. Muhammed Javed', "Technical Analyst", "24/04/22", "Pending", 32983),
+    // createData('Dr. rahul Kala', "Risk Analyst", "13/07/22", "Pending", 329810),
 ];
 
 export default function ListApplicationTable() {
@@ -51,8 +51,11 @@ export default function ListApplicationTable() {
     }, []);
 
     const fetchDetails = async() => {
-        const data = await axios.get('http://localhost:3001/intern/facultyInterships' , {withCredentials:true})
-        console.log(data)
+        const response = await axios.get('http://localhost:3001/intern/facultyInterships' , {withCredentials:true})
+        const applications = response.data.data
+        for(let application in applications){
+            rows.push( createData(application.studentId, 'ML Engineer' , application.timestamps , application.isApproved , application._id))
+        }
     }
 
 
@@ -61,7 +64,7 @@ export default function ListApplicationTable() {
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell>Student Name</StyledTableCell>
+                        <StyledTableCell>Student id</StyledTableCell>
                         <StyledTableCell align="center">Profile</StyledTableCell>
                         <StyledTableCell align="center">Applied on</StyledTableCell>
                         <StyledTableCell align="center">Application Status</StyledTableCell>
@@ -78,7 +81,7 @@ export default function ListApplicationTable() {
                             <StyledTableCell align="center">{row.appliedOn}</StyledTableCell>
                             <StyledTableCell align="center">{row.applicationStatus}</StyledTableCell>
 
-                            <StyledTableCell align="center"> <Button component={Link} to={`/application/${row.applicationId}`} ><PreviewIcon /></Button> </StyledTableCell>
+                            <StyledTableCell align="center"> <Button component={Link} to={`/review/${row.applicationId}`} ><PreviewIcon /></Button> </StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>
