@@ -77,7 +77,9 @@ export default function StudentProfile() {
       <Typography variant='h3'>My Profile</Typography>
       <Paper className='student-profile-paper'>
         <form onSubmit={formik.handleSubmit}>
-          <TextField style={{ marginBottom: 20 }} id="outlined-basic" name='name' fullWidth label="Name" variant="outlined" value={userDetails.name} disabled />
+          <TextField style={{ marginBottom: 20 }} id="outlined-basic" name='name' fullWidth label="Name" variant="outlined"
+           value={userDetails.name}
+            disabled />
           <TextField style={{ marginBottom: 20 }} id="outlined-basic" name='email' fullWidth label="Email" variant="outlined" value={userDetails.email} disabled />
           
           <TextField style={{ marginBottom: 20, marginRight: 5 }} id="outlined-basic" name = 'CGPA'
