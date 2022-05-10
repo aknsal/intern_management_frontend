@@ -1,31 +1,64 @@
 import { Typography, Paper, Button } from '@mui/material'
 import React from 'react'
 import "./ReviewApplication.css"
-
+import axios from "axios"
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams
+} from "react-router-dom";
+  
 export default function ReviewApplication() {
+
+    const [application,setapplication] = React.useState([]);
+    const [student,setstudent] = React.useState([])
+    const { aid } = useParams()
+
+    React.useEffect(() => {
+        getApplicationDetails()
+    },[])
+    
+    const getApplicationDetails = async(req,res) => {
+        let response = await axios.get(`http://localhost:3001/intern/application/${aid}` , {withCredentials:true})
+        
+        if (response && response.data) {
+            setapplication(response.data.data)
+            setstudent(response.data.student)
+        }
+    }
+
+    const approve = async(req,res) => {
+        await axios.get(`http://localhost:3001/intern/approve/${aid}` , {withCredentials:true})
+    }
+
+
+
     return (
         <div className="review-application-container">
             <div className='review-student-details'>
                 <Paper className='review-paper'>
                     <Typography color='primary' gutterBottom variant="h5">Student Details</Typography>
-                    <Typography><b>Name : </b>Mohit Chauhan</Typography>
-                    <Typography><b>Email : </b>mc@email.com</Typography>
-                    <Typography><b>Phone: </b>9876543289</Typography>
-                    <Typography><b>CGPA: </b>8.7</Typography>
-                    <Typography><b>Enrollment Number: </b>IIT2020249</Typography>
-                    <Typography><b>Branch: </b>Information Technology</Typography>
-                    <Typography><b>Resume Link: </b>http://resume.com</Typography>
+                    <Typography><b>Name : </b>{student.name ? student.name : "Mohit Chauhan"}</Typography>
+                    <Typography><b>Email : </b> {student.email}</Typography>
+                    <Typography><b>Phone: </b> {student.phone} </Typography>
+                    <Typography><b>CGPA: </b> {student.CGPA} </Typography>
+                    <Typography><b>Enrollment Number: </b>{student.enrollmentNumber}</Typography>
+                    <Typography><b>Branch: </b> {student.branch} </Typography>
+                    <Typography><b>Resume Link: </b> {student.resume} </Typography>
 
                 </Paper>
 
                 <Paper className='review-paper'>
                     <Typography color='primary' gutterBottom variant="h5">Application Details</Typography>
-                    <Typography><b>Why hire me</b>: Lorem jkdfjfajkldsfdsacndsjklacdjkcnksdajnckjsdfkdsfjdncdkjni cdsjkhcdsjkf dskcjbuicij cnsd fkjds csd</Typography>
-                    <Typography><b>My Experiance : </b>My experiance</Typography>
+                    <Typography><b>Why hire me</b>: {application.whyHire} </Typography>
+                    <Typography><b>My Experiance : </b> {application.experience} </Typography>
+                    <Typography><b>Status </b> {application.isApproved} </Typography>
                 </Paper>
                 <div className='aproove-or-reject'>
-                    <Button style={{ marginRight: 20 }} variant='contained' fullWidth color='success'>Approve</Button>
-                    <Button style={{ marginLeft: 20 }} variant='contained' fullWidth color='error' >Reject</Button>
+                    <Button style={{ marginRight: 20 }} variant='contained' fullWidth color='success' onClick= { () => {approve()}}>Approve</Button>
+                    <Button style={{ marginLeft: 20 }} variant='contained' fullWidth color='error'  >Reject</Button>
                 </div>
             </div>
         </div>
