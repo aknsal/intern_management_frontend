@@ -17,7 +17,7 @@ import { userDetailsContext } from "../../context/userDetailsProvider";
 import axios from "axios";
 import "./nav.css";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile",  "Dashboard", "Logout"];
 
 const Navbar = ({ setIsDarkTheme }) => {
 	const [userDetails, setUserDetails] = React.useContext(userDetailsContext);
@@ -97,6 +97,19 @@ const Navbar = ({ setIsDarkTheme }) => {
 			setUserDetails(null);
 			window.location = "/";
 		}
+
+		if(setting == "Dashboard"){
+			window.location = userDetails && userDetails.isStudent
+											? "/dashboard/student"
+											: "/dashboard/faculty"
+		}
+
+		if(setting == "Profile"){
+			window.location = userDetails && userDetails.isStudent
+											? "/profile/student"
+											: "/profile/faculty"
+		}
+
 	};
 
 	const redirectToGoogleSSOFaculty = async () => {

@@ -50,14 +50,30 @@ export default function ListApplicationTable() {
         fetchDetails()
     }, []);
 
+    const [applications,setapplications] = React.useState(null)
+
     const fetchDetails = async() => {
         const response = await axios.get('http://localhost:3001/intern/facultyInterships' , {withCredentials:true})
-        const applications = response.data.data
-        for(let application in applications){
-            rows.push( createData(application.studentId, 'ML Engineer' , application.timestamps , application.isApproved , application._id))
+
+        if(response){
+            setapplications(response.data.data)
         }
     }
 
+    if(!applications){
+        return (
+            <h1>
+                Loading
+            </h1>
+        )
+    }
+
+    if(applications && rows.length == 0){
+        for(let i=0; i<applications.length; i++){
+            rows.push( createData(applications[i].studentId, 'ML Engineer' , applications[i].createdAt.substring(0,10)  , applications[i].isApproved ? "Accepted" : "Pending"
+             , applications[i]._id))
+        }
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -80,7 +96,6 @@ export default function ListApplicationTable() {
                             <StyledTableCell align="center">{row.jobRole}</StyledTableCell>
                             <StyledTableCell align="center">{row.appliedOn}</StyledTableCell>
                             <StyledTableCell align="center">{row.applicationStatus}</StyledTableCell>
-
                             <StyledTableCell align="center"> <Button component={Link} to={`/review/${row.applicationId}`} ><PreviewIcon /></Button> </StyledTableCell>
                         </StyledTableRow>
                     ))}
