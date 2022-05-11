@@ -10,8 +10,8 @@ import {
     Route,
     Link,
     useParams
-  } from "react-router-dom";
-  
+} from "react-router-dom";
+
 
 const validationSchema = yup.object({
     // email: yup
@@ -34,7 +34,7 @@ const validationSchema = yup.object({
 });
 
 export default function Application() {
-    
+
     const formik = useFormik({
         initialValues: {
             whyHire: '',
@@ -46,28 +46,29 @@ export default function Application() {
         },
     });
 
-    const applyForIntern = async(data) =>{
-        await axios.post(`/intern/apply/${aid}` , {withCredentials: true}).then((res) => console.log(res))
+    const applyForIntern = async (data) => {
+        console.log(data);
+        await axios.post(`/intern/apply/${aid}`, data, { withCredentials: true }).then((res) => console.log(res))
     }
 
-    const [internship,setinternship] = React.useState([]);
-    const [faculty,setfaculty] = React.useState([])
+    const [internship, setinternship] = React.useState([]);
+    const [faculty, setfaculty] = React.useState([])
     const { aid } = useParams()
 
     React.useEffect(() => {
         getInternshipDetails()
-    },[])
-    
-    const getInternshipDetails = async(req,res) => {
-        let response = await axios.get(`http://localhost:3001/intern/internship/${aid}` , {withCredentials:true})
-        
+    }, [])
+
+    const getInternshipDetails = async (req, res) => {
+        let response = await axios.get(`http://localhost:3001/intern/internship/${aid}`, { withCredentials: true })
+
         if (response && response.data) {
             setinternship(response.data.data)
             setfaculty(response.data.faculty)
         }
     }
 
-    
+
 
     return (
         <div className='application-cointainer'>
@@ -103,17 +104,17 @@ export default function Application() {
                 <Paper className='application-input-paper'>
                     <Typography gutterBottom variant="h6" >Apply for intern</Typography>
                     <form onSubmit={formik.handleSubmit}>
-                        
-                        <TextField style={{ marginBottom: 20 }} id="outlined-basic" multiline rows={8} name='whyHire' fullWidth label="Why should we hire you?" 
-                         onChange={formik.handleChange}
-                         value={formik.values.whyHire}              
-                        variant="outlined" />
+
+                        <TextField style={{ marginBottom: 20 }} id="outlined-basic" multiline rows={8} name='whyHire' fullWidth label="Why should we hire you?"
+                            onChange={formik.handleChange}
+                            value={formik.values.whyHire}
+                            variant="outlined" />
 
                         <TextField style={{ marginBottom: 20 }} id="outlined-basic" multiline rows={10} name='experience'
-                         onChange={formik.handleChange}
-                         value={formik.values.experience}              
-                        fullWidth label="What is your experiance in this field?" variant="outlined" />
-                        
+                            onChange={formik.handleChange}
+                            value={formik.values.experience}
+                            fullWidth label="What is your experiance in this field?" variant="outlined" />
+
                         <Button color="primary" variant="contained" fullWidth type="submit">
                             Submit
                         </Button>
