@@ -46,15 +46,15 @@ export default function Application() {
         },
     });
 
-    const applyForIntern = async (data) => {
-        console.log(data);
-        await axios.post(`/intern/apply/${aid}`, data, { withCredentials: true }).then((res) => console.log(res))
-    }
 
     const [internship, setinternship] = React.useState([]);
     const [faculty, setfaculty] = React.useState([])
     const { aid } = useParams()
 
+    const applyForIntern = async (data) => {
+        console.log(data);
+        await axios.post(`http://localhost:3001/intern/apply/${aid}`, data, { withCredentials: true }).then((res) => console.log(res))
+    }
     React.useEffect(() => {
         getInternshipDetails()
     }, [])

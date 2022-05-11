@@ -41,7 +41,10 @@ export default function StudentProfile() {
     if (response && response.data) {
       setUserDetails(response.data.user);
     }
-    console.log(response.data)
+    formik.values.phone = response.data.user.phoneNo;
+    formik.values.CGPA = response.data.user.CGPA;
+    formik.values.resume = response.data.user.resume;
+    console.log(response.data.user)
   }
 
   const registerStudent = async (values) => {
@@ -60,15 +63,15 @@ export default function StudentProfile() {
 
   const formik = useFormik({
     initialValues: {
-      CGPA: userDetails.CGPA,
-      phone: userDetails.phoneNo,
-      resume: userDetails.resume,
+      CGPA: '',
+      phone: '',
+      resume: '',
     },
     validationSchema: validationSchema,
     onSubmit: values => {
       registerStudent(values)
-
-    }
+    },
+    enableReinitialze: true,
   });
 
 
@@ -78,24 +81,46 @@ export default function StudentProfile() {
       <Typography variant='h3'>My Profile</Typography>
       <Paper className='student-profile-paper'>
         <form onSubmit={formik.handleSubmit}>
-          <TextField style={{ marginBottom: 20 }} id="outlined-basic" name='name' fullWidth label="Name" variant="outlined"
-            value={userDetails.name}
-            disabled />
-          <TextField style={{ marginBottom: 20 }} id="outlined-basic" name='email' fullWidth label="Email" variant="outlined" value={userDetails.email} disabled />
+          {userDetails && userDetails.name ?
+            <TextField style={{ marginBottom: 20 }} id="outlined-basic" name='name' fullWidth label="Name" variant="outlined"
+              value={userDetails.name}
+              disabled />
+            :
+            null
+          }
+          {userDetails && userDetails.name ?
+            <TextField style={{ marginBottom: 20 }} id="outlined-basic" name='email' fullWidth label="Email" variant="outlined" value={userDetails.email} disabled />
+            :
+            null
+          }
+
+
+
 
           <TextField style={{ marginBottom: 20, marginRight: 5 }} id="outlined-basic" name='CGPA'
             onChange={formik.handleChange}
             value={formik.values.CGPA}
             label="CGPA" variant="outlined" />
 
-          <TextField style={{ marginBottom: 20 }} id="outlined-basic" label="Enrollment Number" value={userDetails.enrollmentNumber} variant="outlined" disabled />
+          {userDetails && userDetails.name ?
+            <TextField style={{ marginBottom: 20 }} id="outlined-basic" label="Enrollment Number" value={userDetails.enrollmentNumber} variant="outlined" disabled />
+            :
+            null
+          }
+
+
 
           <TextField style={{ marginBottom: 20, marginRight: 5 }} id="outlined-basic" label="Phone" name='phone'
             onChange={formik.handleChange}
             value={formik.values.phone}
             variant="outlined" />
 
-          <TextField style={{ marginBottom: 20 }} id="outlined-basic" label="Branch" value={userDetails.branch} variant="outlined" disabled />
+          {userDetails && userDetails.name ?
+            <TextField style={{ marginBottom: 20 }} id="outlined-basic" label="Branch" value={userDetails.branch} variant="outlined" disabled />
+            :
+            null
+          }
+
           <TextField style={{ marginBottom: 20 }} id="outlined-basic" name='resume'
             onChange={formik.handleChange}
             value={formik.values.resume}

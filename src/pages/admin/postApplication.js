@@ -52,7 +52,7 @@ export default function PostProfile() {
 
 	const formik = useFormik({
 		initialValues: {
-			// name: "",
+			name: "",
 			email: "",
 			stipend: "",
 			minCGPA: "",
@@ -89,7 +89,7 @@ export default function PostProfile() {
 						value={formik.values.email}
 						label="Faculty Email"
 						variant="outlined"
-						// value={formik.values.email}
+					// value={formik.values.email}
 					/>
 
 					<TextField
